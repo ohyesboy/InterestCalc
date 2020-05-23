@@ -1,0 +1,47 @@
+
+<div>
+  <fieldset>
+    <label>Borrow Amount</label>
+    <input type="number" [(ngModel)]="totalBorrowed" />
+  </fieldset>
+
+  <fieldset>
+    <label>APR %</label>
+    <input type="number" [(ngModel)]="apr" />
+  </fieldset>
+
+  <fieldset>
+    <label>Months</label>
+    <input type="number" [(ngModel)]="months" />
+  </fieldset>
+
+  <fieldset>
+    <label>Addition principal payment</label>
+    <input type="number" [(ngModel)]="additionalPrincipal" /> <label for="">Use value from table</label> <input type="checkbox" [(ngModel)]="useAdditionalFromTable" />
+  </fieldset>
+  <button (click)="calculate()">calculate</button>
+</div>
+
+<div *ngIf="result">
+  <div><label for="">Monthly Payments:</label>{{result.cyclePayments | currency}}</div>
+  <div><label for="">Total Interests:</label>{{result.totalInterest | currency}}  ({{result.totalInterest / result.totalPrincipal | percent}} of original borrowed)</div>
+  <div><label for="">Total Payments:</label>{{result.totalInterest + result.totalPrincipal | currency}}</div>
+  <table border="1">
+    <tr>
+      <td>Pay#</td>
+      <td>Pricipal</td>
+      <td>Interest</td>
+      <td>Additional</td>
+      <td>Rest %</td>
+    </tr>
+    <tr *ngFor="let pay of result.payments">
+      <td>{{pay.index+1}}</td>
+      <td>{{pay.principal|currency}}</td>
+      <td>{{pay.interest|currency}}</td>
+      <td><input type="number" [(ngModel)]="pay.additional" [hidden]="!useAdditionalFromTable" style="width:80px"/>
+        <span [hidden]="useAdditionalFromTable">{{pay.additional | currency}}</span>
+      </td>
+      <td>{{pay.restPrincipal / totalBorrowed | percent}}</td>
+    </tr>
+  </table>
+</div>

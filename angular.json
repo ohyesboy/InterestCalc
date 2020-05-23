@@ -145,6 +145,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "InterestCalc"
+    }
+  },
+  "defaultProject": "InterestCalc",
+  "cli": {
+    "analytics": "a3cfa404-4d65-46e5-a408-ebc680199072"
+  }
 }
