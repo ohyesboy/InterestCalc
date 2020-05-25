@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,19 +8,29 @@ declare var $:any;
 export class AppComponent implements OnInit {
   ngOnInit(): void {
 
-    $(document).ready(function(){
-      $('a[href^="#"]').on('click',function (e) {e.preventDefault();
+    $(document).ready(function () {
+      $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
 
         var target = this.hash,
-        $target = $(target);
+          $target = $(target);
 
         $('html, body').stop().animate({
-            'scrollTop': $target.offset().top
+          'scrollTop': $target.offset().top
         }, 900, 'swing', function () {
-            window.location.hash = target;
+          window.location.hash = target;
         });
+      });
     });
-  });
+
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   }
+
+
+
+
   title = 'InterestCalc';
 }

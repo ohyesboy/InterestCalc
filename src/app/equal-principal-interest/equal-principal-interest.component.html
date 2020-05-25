@@ -1,58 +1,77 @@
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
-<a href="#test">go to test</a>
-<div>
-  <fieldset>
-    <label>Borrow Amount</label>
-    <input type="number" [(ngModel)]="totalBorrowed" />
-  </fieldset>
 
-  <fieldset>
-    <label>APR %</label>
-    <input type="number" [(ngModel)]="apr" />
-  </fieldset>
+<div class="container">
+  <form>
+    <div class="form-row">
+      <div class="form-group col-sd-3">
+        <label>Borrow Amount</label>
+        <input type="number" class="form-control" placeholder="10000" name="totalBorrowed" [(ngModel)]="totalBorrowed">
+      </div>
+      <div class="form-group col-sd-3">
+        <label>APR</label>
 
-  <fieldset>
-    <label>Months</label>
-    <input type="number" [(ngModel)]="months" />
-  </fieldset>
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="4" name="apr" [(ngModel)]="apr">
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
 
-  <fieldset>
-    <label>Addition principal payment</label>
-    <input type="number" [(ngModel)]="additionalPrincipal" /> <label for="">Use value from table</label> <input type="checkbox" [(ngModel)]="useAdditionalFromTable" />
-  </fieldset>
-  <button (click)="calculate()">calculate</button>
-</div>
+      </div>
 
+      <div class="form-group col-sd-3">
+        <label>Months</label>
+        <input type="number" class="form-control" placeholder="360" name="months" [(ngModel)]="months" >
+      </div>
+
+      <div class="form-group col-sd-3">
+        <label>Additional</label>
+        <input type="number" class="form-control" placeholder="0" name="additionalPrincipal" [(ngModel)]="additionalPrincipal" >
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="useAdditionalFromTable" [(ngModel)]="useAdditionalFromTable" >
+          <label class="form-check-label" for="gridCheck">
+            Use value from table
+          </label>
+        </div>
+      </div>
+
+
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="calculate()">Calculate</button>
+  </form>
+
+
+
+<a href="#bottom">Go to bottom</a>
+<div id="top"></div>
 <div *ngIf="result">
-  <div><label for="">Monthly Payments:</label>{{result.cyclePayments | currency}}</div>
-  <div><label for="">Total Interests:</label>{{result.totalInterest | currency}}  ({{result.totalInterest / result.totalPrincipal | percent}} of original borrowed)</div>
-  <div><label for="">Total Payments:</label>{{result.totalInterest + result.totalPrincipal | currency}}</div>
-  <table border="1">
-    <tr>
-      <td>Pay#</td>
-      <td>Pricipal</td>
-      <td>Interest</td>
-      <td>Additional</td>
-      <td>Rest %</td>
-    </tr>
-    <tr *ngFor="let pay of result.payments">
-      <td>{{pay.index+1}}</td>
-      <td>{{pay.principal|currency}}</td>
-      <td>{{pay.interest|currency}}</td>
-      <td><input type="number" [(ngModel)]="pay.additional" [hidden]="!useAdditionalFromTable" style="width:80px"/>
-        <span [hidden]="useAdditionalFromTable">{{pay.additional | currency}}</span>
-      </td>
-      <td>{{pay.restPrincipal / totalBorrowed | percent}}</td>
-    </tr>
+  <div><label for="">Monthly Payments:</label><span  class="text-primary">{{result.cyclePayments | currency}}</span></div>
+  <div><label for="">Total Interests:</label><span  class="text-primary">{{result.totalInterest | currency}}</span>  <span class="text-warning">({{result.totalInterest / result.totalPrincipal | percent}} of original borrowed)</span></div>
+  <div><label for="">Total Payments:</label><span  class="text-primary">{{result.totalInterest + result.totalPrincipal | currency}}</span></div>
+  <table class="table  table-striped">
+    <thead>
+      <tr>
+        <th>Pay#</th>
+        <th>Pricipal</th>
+        <th>Interest</th>
+        <th>Additional</th>
+        <th>Rest %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pay of result.payments">
+        <th>{{pay.index+1}}</th>
+        <td>{{pay.principal|currency}}</td>
+        <td>{{pay.interest|currency}}</td>
+        <td><input type="number" [(ngModel)]="pay.additional" [hidden]="!useAdditionalFromTable" style="width:80px"/>
+          <span [hidden]="useAdditionalFromTable">{{pay.additional | currency}}</span>
+        </td>
+        <td title="{{pay.restPrincipal | currency}}">{{pay.restPrincipal / totalBorrowed | percent}}</td>
+      </tr>
+    </tbody>
   </table>
 </div>
-<div id="test">this is test</div>
+<div id="bottom"></div>
+<a href="#top">Go to top</a>
+
+
+</div>
