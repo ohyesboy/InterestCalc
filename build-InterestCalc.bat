@@ -1,1 +1,3 @@
-ng build --base-href "/InterestCalc" --deploy-url "/InterestCalc/"
+ng build 
+
+docker build -t calc dist -f Dockerfile
